@@ -4,7 +4,7 @@
 #include <BH1750.h>
 BH1750 lightMeter;
 
-// Please enter your sensitive data in the Secret tab
+
 char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
 
@@ -18,19 +18,18 @@ const float light_value = 100;
 bool prevlightstatus = false;
 
 void setup() {
-  // Initialize BH1750 sensor with specified SDA and SCL pins
+ 
   Wire.begin();
   lightMeter.begin();
 
-  // Initialize serial communication
+  
   Serial.begin(9600);
   while (!Serial);
-
-  // Initialize WiFi connection
+  
   WiFi.begin(ssid, pass);
   Serial.println("Connecting to WiFi");
 
-  // Wait for connection
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -60,8 +59,6 @@ void loop() {
     }
     prevlightstatus = sunlightStatus;
   }
-
-  
   delay(5000);
 }
 
@@ -84,14 +81,11 @@ void triggerIFTTTNotification(String PATH_NAME) {
         return;
       }
     }
-
-    // Print response from server
+    
     while (client.available()) {
       char c = client.read();
       Serial.print(c);
     }
-
-    // Close connection
     client.stop();
   } else {
     Serial.println("Failed to connect to IFTTT server.");
